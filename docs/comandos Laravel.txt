@@ -1,0 +1,22 @@
+1 Para Migrar (crear tablas) dependiendo de los archivos migrations
+php artisan migrate
+
+Para revertir los cambios de una migration
+php artisan migrate:rollback
+
+Para observar el estado de migration
+php artisan migrate:status
+---------------------------------------------------------------
+
+2. Para crear un nuevo (Entidad - Modelo)
+
+php artisan make:model Persona
+
+3. Para crear un archivo migration 
+
+php artisan make:migration create_personas_table
+
+
+4. Como generar un Controlador
+php artisan make:controller PersonaController
+php artisan make:controller UsuarioController -r
