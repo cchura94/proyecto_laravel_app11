@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Persona;
+use App\Models\User;
 
 class PersonaController extends Controller
 {
 
     public function funListarAjax(){
         $personas = Persona::get(); // select * from personas
-        return response()->json($personas);
+
+        $usuarios = User::get();
+
+        return response()->json(["personas" => $personas, "usuarios" =>$usuarios]);
     }
 
     public function funListar(){
         $personas = Persona::get(); // select * from personas
 
-        return view("admin.persona.listar", ["personas" => $personas]);
+        $usuarios = User::get();
+
+        return view("admin.persona.listar", ["personas" => $personas, "usuarios" =>$usuarios]);
     }
 
     public function funCrear(){
@@ -61,5 +67,14 @@ class PersonaController extends Controller
         $persona->delete();
 
         return redirect("/persona");
+    }
+
+    public function asignarPersona($id, Request $request){
+        $persona = Persona::find($id);
+
+        $persona->user_id = $request->user_id;
+        $persona->update();
+        return redirect("/persona");
+
     }
 }

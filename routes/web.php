@@ -8,6 +8,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// 
+Route::post("/persona/{id}/asignar", [PersonaController::class, "asignarPersona"]);
 
 Route::get("/persona_ajax", [PersonaController::class, "funListarAjax"]);
 

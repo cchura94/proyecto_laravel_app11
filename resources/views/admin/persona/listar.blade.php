@@ -11,6 +11,7 @@
             <th>APELLIDOS</th>
             <th>FECHA NACIMIENTO</th>
             <th>CI</th>
+            <th>CUENTA USUARIO</th>
             <th>ACCIONES</th>
         </tr>
     </thead>
@@ -22,6 +23,28 @@
             <td>{{ $per->apellidos }}</td>
             <td>{{ $per->fecha_nac }}</td>
             <td>{{ $per->ci }}</td>
+            <td>
+                @if($per->user_id == null)
+                <form action="/persona/{{ $per->id }}/asignar" method="post">
+                    @csrf
+                    <select name="user_id" id="">
+                        {{ $usuarios }}
+                        <option value="">Seleccione Usuario</option>
+                        @foreach($usuarios as $user)
+                        <option value="{{ $user->id }}">{{ $user->email }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit">Asignar Cuenta</button>
+
+                </form>
+
+                @else
+                <div>
+                    <h5>NOMBRE: {{$per->user->name}}</h5>
+                    <h5>CORREO: {{$per->user->email}}</h5>
+                </div>
+                @endif                
+            </td>
             <td>
                 <a href="/persona/{{ $per->id }}">editar</a>
 
