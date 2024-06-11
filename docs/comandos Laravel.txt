@@ -6,6 +6,9 @@ php artisan migrate:rollback
 
 Para observar el estado de migration
 php artisan migrate:status
+
+Para eliminar y volver a migrar
+php artisan migrate:fresh
 ---------------------------------------------------------------
 
 2. Para crear un nuevo (Entidad - Modelo)

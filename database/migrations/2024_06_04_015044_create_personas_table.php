@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string("nombres");
-            $table->string("apellidos")->nullable();
+            $table->string("nombres", 50);
+            $table->string("apellidos", 30)->nullable();
             $table->date("fecha_nac")->nullable();
-            $table->string("ci")->nullable();
+            $table->string("ci", 15)->nullable();
             // 1:1
             $table->bigInteger("user_id")->unsigned()->nullable();
             $table->foreign("user_id")->references("id")->on("users");
