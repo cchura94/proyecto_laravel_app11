@@ -1,0 +1,8 @@
+git clone direccion_repositorio_github
+
+composer update
+
+-- Copiar el archivo .env.example 
+-- renombrar a (.env)
+
+php artisan key:generate

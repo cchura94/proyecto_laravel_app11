@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,3 +38,7 @@ Route::resource("/usuario", UsuarioController::class);
 Route::resource("categoria", CategoriaController::class);
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,3 +1,13 @@
+
+@extends('adminlte::page')
+
+@section('title', 'Nuevo Usuario')
+
+@section('content_header')
+    <h1>Gestión Usuarios</h1>
+@stop
+
+@section('content')
 <h1>Nuevo Usuario</h1>
 
 <form action="/usuario" method="post">
@@ -13,3 +23,5 @@
     <br>
     <input type="submit" value="Guardar Usuario">
 </form>
+
+@stop

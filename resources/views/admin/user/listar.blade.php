@@ -1,3 +1,13 @@
+
+@extends('adminlte::page')
+
+@section('title', 'Usuarios')
+
+@section('content_header')
+    <h1>Gestión Usuarios</h1>
+@stop
+
+@section('content')
 <h1>LIsta de Usuarios</h1>
 
 <a href="/usuario/create">Nuevo Usuario</a>
@@ -32,3 +42,4 @@
         @endforeach
     </tbody>
 </table>
+@stop

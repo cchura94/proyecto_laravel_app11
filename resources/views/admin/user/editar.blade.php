@@ -1,3 +1,13 @@
+
+@extends('adminlte::page')
+
+@section('title', 'Editar Usuarios')
+
+@section('content_header')
+    <h1>Edición Usuarios</h1>
+@stop
+
+@section('content')
 <h1>Editar Usuario</h1>
 
 <form action="/usuario/{{ $usuario->id }}" method="post">
@@ -14,3 +24,4 @@
     <br>
     <input type="submit" value="Modificar Usuario">
 </form>
+@stop

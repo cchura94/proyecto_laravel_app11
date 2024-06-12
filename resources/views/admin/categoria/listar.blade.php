@@ -1,43 +1,89 @@
-<h1>Lista de Categorias</h1>
+@extends('adminlte::page')
 
-<form action="/categoria" method="post">
-    @csrf
-    <label for="">Ingrese Nombre</label>
-    <input type="text" name="nombre">
-    <br>
-    <label for="">Ingrese Detalle</label>
-    <textarea name="detalle" id="" cols="30" rows="10"></textarea>
-    <br>
-    <input type="submit" value="Guardar Categoria">
-    
-</form>
+@section('title', 'Categorias')
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>DETALLE</th>
-            <th>ACCION</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($categorias as $cat)
-        <tr>
-            <td>{{ $cat->id }}</td>
-            <td>{{ $cat->nombre }}</td>
-            <td>{{ $cat->detalle }}</td>
-            <td>
-                <form action="/categoria/{{ $cat->id }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="eliminar">
-                </form>
+@section('content_header')
+    <h1>Gestión Categorias</h1>
+@stop
 
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+@section('content')
 
-{{ $categorias }}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nueva Categoria</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/categoria" method="post">
+      <div class="modal-body">
+            @csrf
+            <label for="">Ingrese Nombre</label>
+            <input type="text" name="nombre" class="form-control">
+            <br>
+            <label for="">Ingrese Detalle</label>
+            <textarea name="detalle" id="" cols="30" rows="10" class="form-control"></textarea>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Categoria</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+    <div class="card-header">
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Nueva Categoria
+</button>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NOMBRE</th>
+                    <th>DETALLE</th>
+                    <th>ACCION</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($categorias as $cat)
+                <tr>
+                    <td>{{ $cat->id }}</td>
+                    <td>{{ $cat->nombre }}</td>
+                    <td>{{ $cat->detalle }}</td>
+                    <td>
+                        <form action="/categoria/{{ $cat->id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            
+                        </form>
+        
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+{{-- $categorias --}}
+
+
+
+@stop
