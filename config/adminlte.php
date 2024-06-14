@@ -339,6 +339,11 @@ return [
             'icon' => 'fas fa-fw fa-box',
         ],
         [
+            'text' => 'Productos',
+            'url' => 'producto',
+            'icon' => 'fas fa-fw fa-box',
+        ],
+        [
             'text' => 'Usuarios',
             'url' => 'usuario',
             'icon' => 'fas fa-fw fa-user',

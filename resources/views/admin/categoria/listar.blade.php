@@ -64,6 +64,7 @@
                     <td>{{ $cat->id }}</td>
                     <td>{{ $cat->nombre }}</td>
                     <td>{{ $cat->detalle }}</td>
+                    <!--<td> {{ $cat->productos }} </td>-->
                     <td>
                         <form action="/categoria/{{ $cat->id }}" method="post">
                             @csrf
@@ -85,5 +86,22 @@
 {{-- $categorias --}}
 
 
+
+@stop
+
+@section('js')
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('status'))
+    <script>
+        Swal.fire({
+            title: "Categoria Registrada!",
+            text: "CLick para continuar!",
+            icon: "success"
+        });
+
+    </script>
+    @endif
 
 @stop

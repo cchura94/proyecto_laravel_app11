@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\Producto;
+use Illuminate\Http\Request;
 
-class CategoriaController extends Controller
+class ProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categorias = Categoria::get(); // select * from categorias
-        // return view("admin.categoria.listar", ["categorias" => $categorias]);
-        return view("admin.categoria.listar", compact("categorias"));
+        // $productos = Producto::get();
+        $productos = Producto::paginate(5);
+
+        return view("admin.producto.listar", compact('productos'));
     }
 
     /**
@@ -22,7 +24,9 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::get();
+
+        return view("admin.producto.nuevo", compact('categorias'));
     }
 
     /**
@@ -30,13 +34,23 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        // guardar en BD
-        $categoria = new Categoria();
-        $categoria->nombre = $request->nombre;
-        $categoria->detalle = $request->detalle;
-        $categoria->save();
+        // validacion
+        $request->validate([
+            "nombre" => "required",
+            "precio" => "required",
+            "categoria_id" => "required",
+            
+        ]);
 
-        return redirect()->back()->with("status", true);
+        // guardar
+        $producto = new Producto();
+        $producto->nombre = $request->nombre;
+        $producto->precio = $request->precio;
+        $producto->stock = $request->stock;
+        $producto->categoria_id = $request->categoria_id;
+        $producto->save();
+
+        return redirect()->route("producto.index");
     }
 
     /**
@@ -68,9 +82,6 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        $categoria = Categoria::find($id);
-        $categoria->delete();
-
-        return redirect()->back();
+        //
     }
 }
