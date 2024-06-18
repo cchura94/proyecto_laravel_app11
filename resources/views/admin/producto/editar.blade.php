@@ -1,34 +1,26 @@
 @extends('adminlte::page')
 
-@section('title', 'Nuevo Producto')
+@section('title', 'Editar Producto')
 
 @section('content_header')
-    <h1>Nuevo Producto</h1>
+    <h1>Editar Producto</h1>
 @stop
 
 @section('content')
 
 
 
-<form action="{{ route('producto.store') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('producto.update', $producto->id) }}" method="post" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     <div class="row">
         <div class="col-md-8">
             <div class="card">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
                         <label for="">Ingrese Nombre Producto</label>
-                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre">
+                        <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ $producto->nombre }}">
             
                         @error('nombre')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -37,7 +29,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="">Ingrese Precio</label>
-                        <input type="number" step="0.01" class="form-control @error('precio') is-invalid @enderror" name="precio">
+                        <input type="number" step="0.01" class="form-control @error('precio') is-invalid @enderror" name="precio" value="{{ $producto->precio }}">
                 
                         @error('precio')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -46,7 +38,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="">Ingrese Stock</label>
-                        <input type="number" class="form-control" name="stock">
+                        <input type="number" class="form-control" name="stock" value="{{ $producto->stock }}">
                         
                         @error('stock')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -59,17 +51,24 @@
                         <select name="categoria_id" id="" class="form-control">
                             <option value="">Seleccione una opción</option>
                             @foreach($categorias as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->nombre }}</option>
+                            <option value="{{ $cat->id }}" {{ ($producto->categoria_id == $cat->id)?'selected':'' }}>{{ $cat->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-md-8">
+                        <label for="">Ingrese Descripción</label>
+                        <textarea name="descripcion" class="form-control" id="" cols="30" rows="10">{{$producto->descripcion}}</textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Seleccione Imagen (Para Cambiar)</label>
+                        <input type="file" name="imagen" class="form-control">
+                        <label for="">Imagen Actual</label>
+                        <img src="{{ asset($producto->imagen) }}" alt="" width="100%">
+                    </div>
+                    
                 </div>
 
-                <label for="">Seleccione Imagen</label>
-                <input type="file" name="imagen" class="form-control">
 
-                <label for="">Ingrese Desacripción</label>
-                <textarea name="descripcion" class="form-control" id="" cols="30" rows="10"></textarea>
 
             </div>
 
@@ -79,9 +78,8 @@
         <div class="md-4">
             <div class="card">
                 <div class="card-body">
-                    <button type="submit" class="btn btn-primary  btn-block">Guardar Producto</button>
-                    <button type="submit" class="btn btn-success btn-block">Reporte PDF</button>
-                    <button type="submit" class="btn btn-info btn-block">Reporte EXCEL</button>
+                    <button type="submit" class="btn btn-primary  btn-block">Modificar Producto</button>
+
 
                 </div>
             </div>

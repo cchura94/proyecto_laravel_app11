@@ -13,7 +13,20 @@
         <div class="card">
             <div class="card-body">
 
-                <a href="{{ route('producto.create') }}" class="btn btn-primary">Nuevo Producto</a>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ route('producto.create') }}" class="btn btn-primary">Nuevo Producto</a>
+
+                </div>
+                <div class="col-md-6">
+
+                    <form action="{{ route('buscar-producto') }}" method="get">
+                        @csrf
+                        <input type="search" name="buscar" class="form-control">
+                        <input type="submit" value="buscar" class="btn btn-info">
+                    </form>
+                </div>
+            </div>
                 
                 <table class="table table-striped table-hover">
                     <thead>
@@ -35,8 +48,20 @@
                             <td>{{ $prod->precio }}</td>
                             <td>{{ $prod->stock }}</td>
                             <td>{{ $prod->categoria->nombre }}</td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <img src="{{ asset($prod->imagen) }}" alt="" width="50px">
+                            </td>
+                            <td>
+                                <a href="{{ route('producto.edit', $prod->id) }}" class="btn btn-warning">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+
+                                <form action="{{ route('producto.destroy', $prod->id) }}" method="post" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

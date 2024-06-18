@@ -7,11 +7,16 @@ use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
+    public function __construct(){
+        // $this->middleware("auth");
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        
+
         $categorias = Categoria::get(); // select * from categorias
         // return view("admin.categoria.listar", ["categorias" => $categorias]);
         return view("admin.categoria.listar", compact("categorias"));

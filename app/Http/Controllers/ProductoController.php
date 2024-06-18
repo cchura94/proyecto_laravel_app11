@@ -14,10 +14,19 @@ class ProductoController extends Controller
     public function index()
     {
         // $productos = Producto::get();
-        $productos = Producto::paginate(5);
+        $productos = Producto::orderBy('id', 'desc')->paginate(5);
 
         return view("admin.producto.listar", compact('productos'));
     }
+
+    public function buscarProductos(Request $request){
+        $buscar = $request->buscar;
+
+        $productos = Producto::where('nombre', 'like', "%$buscar%")->orderBy('id', 'desc')->paginate(5);
+        
+        return view("admin.producto.listar", compact('productos'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,8 +48,16 @@ class ProductoController extends Controller
             "nombre" => "required",
             "precio" => "required",
             "categoria_id" => "required",
-            
+
         ]);
+
+        $direccion_imagen = "";
+        if ($file = $request->file("imagen")) {
+            $direccion_imagen = time() . "-" . $file->getClientOriginalName();
+            $file->move("imagenes/", $direccion_imagen);
+
+            $direccion_imagen = "imagenes/" . $direccion_imagen;
+        }
 
         // guardar
         $producto = new Producto();
@@ -48,6 +65,8 @@ class ProductoController extends Controller
         $producto->precio = $request->precio;
         $producto->stock = $request->stock;
         $producto->categoria_id = $request->categoria_id;
+        $producto->descripcion = $request->descripcion;
+        $producto->imagen = $direccion_imagen;
         $producto->save();
 
         return redirect()->route("producto.index");
@@ -66,7 +85,10 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        $categorias = Categoria::get();
+
+        return view("admin.producto.editar", ["producto" => $producto, "categorias" => $categorias]);
     }
 
     /**
@@ -74,7 +96,33 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $request->validate([
+            "nombre" => "required",
+            "precio" => "required",
+            "categoria_id" => "required",
+
+        ]);
+
+        $producto = Producto::findOrFail($id);
+
+        if ($file = $request->file("imagen")) {
+            $direccion_imagen = "";
+            $direccion_imagen = time() . "-" . $file->getClientOriginalName();
+            $file->move("imagenes/", $direccion_imagen);
+
+            $direccion_imagen = "imagenes/" . $direccion_imagen;
+            $producto->imagen = $direccion_imagen;
+        }
+
+        $producto->nombre = $request->nombre;
+        $producto->precio = $request->precio;
+        $producto->stock = $request->stock;
+        $producto->categoria_id = $request->categoria_id;
+        $producto->descripcion = $request->descripcion;
+        $producto->update();
+
+        return redirect()->route("producto.index");
     }
 
     /**
