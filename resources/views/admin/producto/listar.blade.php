@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <a href="{{ route('producto.create') }}" class="btn btn-primary">Nuevo Producto</a>
-
+                    <a href="{{ route('reporteProductosGeneral') }}" class="btn btn-info">Generar PDF</a>
                 </div>
                 <div class="col-md-6">
 

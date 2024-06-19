@@ -6,6 +6,8 @@ use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class ProductoController extends Controller
 {
     /**
@@ -131,5 +133,18 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generarReportePDF(){
+        $productos = Producto::get();
+
+        $pdf = Pdf::loadView('pdf.productos', ["productos" => $productos]);
+        return $pdf->download('productos.pdf');
+    }
+
+    public function funApiProductos(){
+        $productos = Producto::get();
+
+        return response()->json($productos, 200);
     }
 }

@@ -359,7 +359,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Nuevo Pedido',
-                    'url' => '#',
+                    'url' => 'pedido/create',
                 ],
                 [
                     'text' => 'Pedidos',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
@@ -8,12 +9,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+Route::get("/productos-api", [ProductoController::class, "funApiProductos"]);
 
 Route::middleware('auth')->group(function(){
+
     
     Route::get('/', function () {
         return view('admin.admin');
     });
+
+    
+    // reporte PDF
+    Route::get("/producto/reporte-general", [ProductoController::class, "generarReportePDF"])->name("reporteProductosGeneral");
+
     // buscador de productos
     // 
     Route::get("/producto/buscar-producto", [ProductoController::class, "buscarProductos"])->name("buscar-producto");
@@ -46,6 +54,8 @@ Route::middleware('auth')->group(function(){
     
     // CRUD DE Productos
     Route::resource("/producto", ProductoController::class);// ->middleware("auth");
+
+    Route::resource('/pedido', PedidoController::class);
 
 });
 
