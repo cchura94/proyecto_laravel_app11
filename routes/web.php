@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UsuarioController;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +17,13 @@ Route::middleware('auth')->group(function(){
 
     
     Route::get('/', function () {
-        return view('admin.admin');
+        $categorias = Categoria::with('productos')->get();
+        return view('admin.admin', ["categorias" => $categorias]);
     });
 
+    // busqueda de cliente (API)
+    Route::get("/cliente/buscar-api", [ClienteController::class, "funBusqueda"]);
+    Route::post("/cliente/guardar-api", [ClienteController::class, "guardarApi"]);
     
     // reporte PDF
     Route::get("/producto/reporte-general", [ProductoController::class, "generarReportePDF"])->name("reporteProductosGeneral");
@@ -56,6 +62,8 @@ Route::middleware('auth')->group(function(){
     Route::resource("/producto", ProductoController::class);// ->middleware("auth");
 
     Route::resource('/pedido', PedidoController::class);
+
+    Route::resource("/cliente", ClienteController::class);
 
 });
 

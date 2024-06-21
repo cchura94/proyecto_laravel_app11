@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedido;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
@@ -30,7 +32,23 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "cliente_id" => "required",
+            "productos" => "required"
+        ]);
+
+        $pedido = new Pedido();
+        $pedido->fecha = date('Y-m-d H:i:s');
+        $pedido->estado = 1;
+        $pedido->cliente_id = $request->cliente_id;
+        $pedido->user_id = Auth::user()->id;
+        $pedido->save();
+
+        foreach ($request->productos as $prod) {
+            $pedido->productos()->attach($prod["producto_id"], ["cantidad" => $prod["cantidad"]]);
+        }
+
+        return response()->json(["mensaje" => "Pedido Registrado"]);
     }
 
     /**
