@@ -315,13 +315,14 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
+        /*[
             'text' => 'pages',
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',
             'label' => 4,
             'label_color' => 'success',
         ],
+        */
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -364,6 +365,20 @@ return [
                 [
                     'text' => 'Pedidos',
                     'url' => '#',
+                ],
+                [
+                    'text' => 'Clientes',
+                    'url' => '#',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Roles',
+            'icon' => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Lista Roles',
+                    'url' => 'role',
                 ],
                 [
                     'text' => 'Clientes',

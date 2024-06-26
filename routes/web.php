@@ -5,6 +5,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,10 @@ Route::get("/productos-api", [ProductoController::class, "funApiProductos"]);
 
 Route::middleware('auth')->group(function(){
 
+
+    Route::post("productos/add-permiso/{id}", [RoleController::class, "addPermiso"] );
+    Route::post("productos/quitar-permiso/{id}", [RoleController::class, "quitarPermiso"] );
+ 
     
     Route::get('/', function () {
         $categorias = Categoria::with('productos')->get();
@@ -64,6 +69,8 @@ Route::middleware('auth')->group(function(){
     Route::resource('/pedido', PedidoController::class);
 
     Route::resource("/cliente", ClienteController::class);
+
+    Route::resource("/role", RoleController::class);
 
 });
 

@@ -10,9 +10,9 @@
 @section('content')
 <h1>LIsta de Usuarios</h1>
 
-<a href="/usuario/create">Nuevo Usuario</a>
+<a class="btn btn-info" href="/usuario/create">Nuevo Usuario</a>
 
-<table border="1">
+<table class="table">
     <thead>
         <tr>
             <th>ID</th>
