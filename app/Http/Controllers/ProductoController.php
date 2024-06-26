@@ -7,9 +7,13 @@ use App\Models\Producto;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
+    public function __construct() {
+        $this->middleware('can:guardar_producto', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,6 +39,10 @@ class ProductoController extends Controller
      */
     public function create()
     {
+        
+        // $user = Auth::user();
+        // $user->can('edit articles');
+
         $categorias = Categoria::get();
 
         return view("admin.producto.nuevo", compact('categorias'));

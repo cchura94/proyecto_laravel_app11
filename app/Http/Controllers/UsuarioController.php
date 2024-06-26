@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
 {
@@ -13,9 +15,11 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = DB::select("select * from users");
+        // $usuarios = DB::select("select * from users");
+        $usuarios = User::get();
 
-        return view("admin.user.listar", compact("usuarios"));
+        $roles = Role::get();
+        return view("admin.user.listar", compact("usuarios", "roles"));
     }
 
     /**
@@ -89,5 +93,15 @@ class UsuarioController extends Controller
 
         return redirect("/usuario");
 
+    }
+
+    public function addRoleUser($id, Request $request) {
+
+        $user = User::find($id);
+        $role = Role::find($request->role_id);
+
+        $user->assignRole($role);
+
+        return redirect()->back();        
     }
 }

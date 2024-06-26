@@ -17,6 +17,9 @@ Route::get("/productos-api", [ProductoController::class, "funApiProductos"]);
 Route::middleware('auth')->group(function(){
 
 
+    // asignar permisos al role
+    Route::post("role/{id}/permisos", [RoleController::class, "actualizarPermisosRole"])->name('actualizar-permisos-role');
+    Route::post("user/{id}/add-role", [UsuarioController::class, "addRoleUser"])->name("add-role");
     Route::post("productos/add-permiso/{id}", [RoleController::class, "addPermiso"] );
     Route::post("productos/quitar-permiso/{id}", [RoleController::class, "quitarPermiso"] );
  
@@ -64,7 +67,7 @@ Route::middleware('auth')->group(function(){
     Route::resource("categoria", CategoriaController::class);// ->middleware("auth");
     
     // CRUD DE Productos
-    Route::resource("/producto", ProductoController::class);// ->middleware("auth");
+    Route::resource("/producto", ProductoController::class);// ->middleware("can:guardar_producto");// ->middleware("auth");
 
     Route::resource('/pedido', PedidoController::class);
 

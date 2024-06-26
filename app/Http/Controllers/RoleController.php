@@ -52,6 +52,23 @@ class RoleController extends Controller
         return redirect()->back();
     }
 
+    public function actualizarPermisosRole($id, Request $request){
+
+        $request->validate([
+            "permisos" => "required"
+        ]);
+        // return $request;
+        $role = Role::find($id);
+        $permissions = $request->permisos;
+      
+            $permisos = Permission::find($permissions)->pluck('name');
+            $role->syncPermissions($permisos);
+  
+
+
+        return redirect()->back();
+    }
+
     /**
      * Display the specified resource.
      */
