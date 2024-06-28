@@ -364,7 +364,7 @@ return [
                 ],
                 [
                     'text' => 'Pedidos',
-                    'url' => '#',
+                    'url' => 'pedido',
                 ],
                 [
                     'text' => 'Clientes',

@@ -14,7 +14,8 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        //
+        $pedidos = Pedido::orderBy('id', 'desc')->get();
+        return view("admin.pedido.lista", ["pedidos" => $pedidos]);
     }
 
     /**
